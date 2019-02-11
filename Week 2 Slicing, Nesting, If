@@ -1,0 +1,57 @@
+# Slicing, nested loops, and if/elif/else conditional clause
+
+
+
+# Slicing is accessing a subsequence within a set. Slicing takes on or two parameters that are placed before or/and after the : encapsulated within braces e.g a[3:2].  The variable on the left side of the colon represents the starting access index starting from the left. The variable on the right represents the ending index that goes up to but does not include that index. Indexing of sets start at 0.
+
+
+a = [ 3,5,7,28,4,9 10 ]
+
+a[:3]  =.  [3,5,7 ]
+a[2:]  =   [ 7,28,4,9,10]
+a[2:5] = [7,28,4]
+
+
+# Nested sets
+
+# A set can hold any type of python object even another set. The ‘[]’ is the access operator for any type of  variable that holds a list of objects. Each ‘[]’ that is added access the next level of the nested list.  
+
+a = [ 20, 12, [ 3, [45,6], 10 ], 4 ]
+
+a[2] =. [ 3, [45,6], 10 ]
+a[2][1] = [45,6]
+
+# Using if,elif,else:
+
+
+hours = float(input("Enter hours worked: "))
+hourly_pay = float(input(("Enter hourly pay: "))
+over_hours = hours – 40
+over_pay = 0.5 * over_hours * hourly_pay
+salary = hours * hourly_pay + over_pay
+if salary > 2000:
+	tax_rate = 0.25
+elif salary > 1500:
+	tax_rate = 0.2
+elif salary > 1000:
+	tax_rate = 0.15
+elif salary > 500:
+	tax_rate = 0.1
+else:
+	tax_rate = 0
+tax = tax_rate * salary
+net = salary - tax
+print("The take-home pay is $%.2f." % net)
+print("We took out $%.2f in taxes." % tax)
+print("Your pay before taxes is $%.2f." % gross_pay)
+print("Your take-home pay is $%.2f." % net_pay)
+print("Have a nice life.")
+
+
+
+
+# In this program there is a stack of elif conditions if the first condition is not true (if salary > 2000). The else serves as the default in which none of the conditions are satisfied. There is the option of adding as many elif conditions you want after the if clause, but you only have the option of adding 1 else condition at the end to serve as a default.  In this program,  salaries 500 or less are defaulted to the else clause where tax_rate = 0. 
+
+
+
+
