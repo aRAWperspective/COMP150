@@ -1,0 +1,82 @@
+Week 2. Loops
+
+
+# Example #1
+
+counter = 10
+for i in range(10) :
+     print(counter)
+     counter = counter – 1
+
+# This is a for loop using the range  reserved word. With 10 as the range specifier means there are 10 iterations from 0 to 9. Range(0,9) would produce the same result. For a single value range argument the 0 is implied.  For range(3,8) would provide 5 iterations – 3,4,5,6,7. 
+The range argument must be an integer (positive whole number) value. Integer based variables can be represented as range parameters.
+
+# The variable i is the iteration variable that represents the loop index. In this example each iteration counter is being reduced by 1.  The ‘:’ after the for statement requires one or more tabed statements below. This single tabbed two statements print(counter) and counter = counter -1  are a part of the loop.
+
+
+# Example # 2
+
+# previous, previous variable
+a = 0
+# previous variable
+b = 1
+# current variable to print out
+c = 0
+
+for i in range(10) :
+	if i == 0 :
+		  print(a)
+		  continue
+	elif i == 1 :
+		  print(b)
+		  continue
+    
+	c = a + b
+	print(c)
+	a = b
+     b = c
+
+
+# This is another range based program that adds the previous two values to be the current value. Notice we have two conditions. If i is equal to 0 the program prints the value of a. If this condition is not true it will go to the elif (else if) statement and check if i is equal to 1. If this is true then the variable b will be printed out. The colon after the if statement looks for 1 or more tabed (inside the condition) statements that will execute if the condition is true.  When i is 0 or 1 is  what is called a base condition. When previous value(s) do not exist there must be an initial assignment. The ‘==’ is used to compare comparible objects before and after the ‘==’. Make sure you are using ‘==’ conditional statements as opposed to ‘=’ in which you are assigning a value. Continue  is a reserved command to exit out of the iteration but not to exit out of the loop.  
+
+# Step through each program iteration and track the value of a and b. For example on the 3rd iterations ( i == 2) a = 0 and b = 1, c is now 1 and is printed out. Next a is assigned 1 and b is assigned 1 at the end of the iteration. 
+
+
+Example # 3
+
+newSet = [ 0, 2, 5, 7, 9, 11, 16, 56, 3 ]
+finalOutput = 0
+for index,i in enumerate(newSet) :
+	if index % 2 == 0 :
+		finalOutput = finalOutput + i
+
+print(finalOutput)
+
+# This example we are iterating through a set. This for statement has two iteration variables: index,i. The index  represents the object location of the set. An index increases from left to right with a set starting at 0. The i represents the actual value at that particular index. For example at index 2 , i is 5. These two values can only be represented through the enumerate reserved word that takes in an argument. In this example enumerate takes in the set newSet.
+
+# newSet is a set in python . A  set is a collection of objects ( interger,float, a string, a character, etc..) each object is separated by a comma and all of the objects are encased in a brackets.
+ 
+# The condition within the loop check if the index is even, and if so add on to the finalOutput with the current set item.  The modulus operator % gets the remainder of the left side value over the right side value. Example 8 % 3 = 2. 
+
+# Example #4
+
+a = 5 
+b = 3
+result = 0
+# Write a program : a x b ( add a , b number of times)
+for i in range(b) :
+	result = a + result
+print(result)
+
+# This program functions as multiplier by looping b times in order to get the product a * b. The variable result is accumlated by taking its current value and adding a to it.
+
+
+# Example # 5
+
+a = 5
+b = 3
+for i in range(a) :
+	for j in range(b) :
+		print(i,j)
+
+ # This example show how to implement a nested loop. The first for loop iterates from 0 to 4. The other loop that is tabbed under it, iterates from 0 to 2 for each iteration of i .  So the output will show all the permutations of (a,b) e.g  (0,1), ( 0,2) , (0,3), (1,0) , (1,1), (1,2) ….  How would you create a program showing all the permutations of (a,b,c) a = 2, b=3, c = 6 ?
