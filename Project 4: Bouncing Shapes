@@ -1,0 +1,237 @@
+// Coordinates for the center of the circle
+float centerX  = 50.0;
+float centerY  = 50.0;
+float radius = 50.0;
+float diffX = 1.5;
+float diffY = 1.5;
+float redValue = 255;
+float greenValue = 0;
+float blueValue = 0;
+
+float squareX = 150;
+float squareY = 150;
+float center =  50.0;
+float corner = 50.0;
+float corners = 50.0;
+float displX = 1.5;
+float displY = 1.5;
+float squareSpeed = 1.5;
+boolean moveDown = true;
+
+float triangleX1 = 30;
+float triangleY1 = 75;
+float triangleX2 = 58;
+float triangleY2 = 20;
+float triangleX3 = 86;
+float triangleY3 = 75;
+float triangleSpeed = 1.5;
+boolean moveUp = true;
+
+boolean circleOn = false;
+boolean squareOn = false;
+boolean triangleOn = false;
+
+// Boolean variable is either true or false
+// if true the circle moves to the right 
+// if false the circle moves to the left
+boolean moveRight = true;
+boolean circleMoveUp = true;
+
+float speedCircle = 1;
+float speedSquare = 1;  
+
+void setup() {
+   // Bring up window resolution 600 x 600 ( pixels)
+   size(600,600); 
+  
+}
+
+void draw() {
+  //  255,255,255  --  white
+  //   FF FF  FF 
+  // 0, 0 , 0  --- black
+  // 255, 0 ,0  -- red
+  // ( 0 -225 -RED), (0-255 Green), (0-255 Blue)
+  background(255,255,255);
+  
+  if (circleOn == true) { 
+     ellipseMode(RADIUS);
+     fill(redValue,greenValue,blueValue);
+     ellipse(centerX,centerY,radius,radius); 
+  }
+  if (squareOn == true) { 
+     rectMode(CENTER);
+     fill(redValue,greenValue,blueValue);
+     rect(squareX,squareY,center,center);   
+  }
+
+  
+  if (triangleOn == true) { 
+     ellipseMode(RADIUS);
+     fill(redValue,greenValue,blueValue);
+      
+  }
+  
+ moveCircle();
+ 
+ rect(squareX,squareY,50,50);
+ moveSquare();
+ 
+ triangle(triangleX1,triangleY1,triangleX2,triangleY2,triangleX3,triangleY3);
+ moveTriangle();
+
+ 
+}
+
+void moveTriangle() {
+ 
+    if (triangleY1 <= 0 + 25) {
+       moveUp = true; 
+    } else if ( triangleY1 >= height - 25) {
+      
+      moveUp = false; 
+    }
+    
+    if (moveUp == true) {
+      triangleY1 += triangleSpeed;
+    } else {
+      
+      triangleY1 -= triangleSpeed; 
+    }
+    
+    if (triangleY2 <= 0 + 25) {
+       moveUp = true; 
+    } else if ( triangleY2 >= height - 25) {
+      
+      moveUp = false; 
+    }
+    
+    if (moveUp == true) {
+      triangleY2 += triangleSpeed;
+    } else {
+      
+      triangleY2 -= triangleSpeed; 
+    }
+    
+    if (triangleY3 <= 0 + 25) {
+       moveUp = true; 
+    } else if ( triangleY3 >= height - 25) {
+      
+      moveUp = false; 
+    }
+    
+    if (moveUp == true) {
+      triangleY3 += triangleSpeed;
+    } else {
+      
+      triangleY3 -= triangleSpeed; 
+    }
+  
+}
+
+void moveSquare() {
+ 
+    if (squareX <= 0) {
+       moveRight = true; 
+    } else if ( squareX >= width - radius) {
+      
+       moveRight = false; 
+    }
+    
+    if (moveRight == true) {
+      squareX += displX * speedSquare;
+    } else {
+       squareX -= displX * speedSquare; 
+    }
+  
+}
+
+// This function will move the circle left and right
+void moveCircle() {
+  
+  //  ------------------- X displacement --------------  
+  // Check if the circle is on the left edge - the moveRight - true
+  if (centerX <= (0 + radius)) {
+     moveRight = true; 
+    
+  }else if (centerX >= width - radius) {
+     // Moving left
+     moveRight = false; 
+  }
+  
+  if (moveRight == true ) {
+     centerX += diffX;
+   
+  }else {
+     centerX -= diffX; 
+  }
+  
+  // ----------------   Y displacement ----------------------
+  if (centerY <= radius) {
+     // At the top 
+     circleMoveUp = false;
+  } else if (centerY >= height - radius) {
+     // Bottom up the screen
+     circleMoveUp = true; 
+  }
+  
+  if (circleMoveUp == true) {
+     centerY  -= diffY* speedCircle;
+  }else {
+     centerY += diffY * speedCircle; 
+  }
+  
+}
+
+
+// This is the callback function that is executed when hitting a key
+void keyPressed() {
+    
+    if (keyCode == LEFT) {
+       // Losing 5% of my speed each time the key is pressed
+       diffX *= .95; 
+    } else if (keyCode == RIGHT) {
+       // Gaining 5% more speed each time the key is pressed 
+       diffX *= 1.05;
+    }
+    
+    if (key == 'c') {
+       // Toggle the circle on and off
+       if (circleOn == true) {
+          circleOn = false; 
+       }else {
+          circleOn = true; 
+       }
+    }    
+    
+    if (key == 's') {
+       // Toggle the square on and off
+       if (squareOn == true) {
+          squareOn = false; 
+       }else {
+          squareOn = true; 
+       }   
+    }
+}
+
+
+void mousePressed() {
+  
+   if (dist(centerX,centerY,mouseX,mouseY) <= radius) {
+       redValue = random(255);
+       greenValue = random(255);
+       blueValue = random(255);
+   }
+
+   if (dist(squareX,squareY,mouseX,mouseY) <= radius) {
+       redValue = random(255);
+       greenValue = random(255);
+       blueValue = random(255);
+   } 
+   
+   if (dist(triangleX1,triangleY1,mouseX,mouseY) <= radius) {
+       redValue = random(255);
+       greenValue = random(255);
+       blueValue = random(255);
+   }  
+}
