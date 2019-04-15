@@ -1,0 +1,83 @@
+# List of student and faculty data
+# Iterate over all the students and faculty members and print out their attributes
+# print out the number of students and number of faculty members using a class member
+
+studentSet = []
+facultySet = []
+gpaSet = []
+researchTopicSet = []
+
+with open('/Users/richardwallace/Desktop/studentRecord.csv') as csv_file:
+  for count, line in enumerate(csv_file) :
+    if count == 0 :
+      continue
+    lineValues = line.rstrip('\n').strip('-').split(',')
+  for index,word in enumerate(lineValues) :
+     if (index == 0) :
+        studentSet.append(word)
+      elif index == 1:
+        gpaSet.append(float(word))
+      elif index == 2:
+        facultySet.append(word)
+      else:
+        researchTopicSet.append(word)
+print(studentSet)
+print(gpaSet)
+print(facultySet)
+print(researchTopicSet)
+
+class Student :
+
+# A class member variable is shared over all of the instances
+studentCount = 0
+gpaSum = 0
+
+#Constructor function - creates the object (instance)
+def __init__(self,name) :
+  self.studentName = name
+  Student.studentCount = Student.studentCount + 1
+  
+def setGPA(self,gpa) :
+  self.studentGPA = gpa
+  #Student.gpaSum = Student.gpaSum + gpa
+  Student.gpaSum+=gpa
+  
+class Faculty :
+
+#A class member variable is shared over all the instances
+facultyCount = 0
+researchCount = 0
+#Constructor fucntion- creates the object (instance)
+def __init__(self,name) :
+  self.facultyName = name
+  Faculty.facultyCount = Faculty.facultyCount + 1
+
+def setResearchTopic(self, researchtopic) :
+  self.facultyResearchTopic = researchtopic
+
+
+
+students = []
+facultyMembers = []
+
+
+studentCount = 0
+for index, item in enumerate(studentSet) :
+  newStudent = Student(item)
+  studentCount = studentCount + 1
+  newStudent.setGPA(gpaSet [index])
+
+  print(newStudent.studentName,newStudent.studentGPA)
+
+facultyCount = 0
+for index, item in enumerate(facultySet) :
+  newFaculty = Faculty(item)
+  facultyCount = facultyCount + 1
+  newFaculty.setResearchTopic(researchTopicSet[index])
+
+  print(newFaculty.facultyName,newFaculty.facultyResearchTopic)
+
+print("The number of students studying with faculty is " + str(Student.studentCount))
+print("The average gpa is " + str(Student.gpaSum / Student.studentCount))
+print("The number of faculty members who have student researchers is " +
+str(Faculty.facultyCount))
