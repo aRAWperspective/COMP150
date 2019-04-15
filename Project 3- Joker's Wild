@@ -1,0 +1,40 @@
+
+import random
+
+slotList = ["200", "Bankrupt", "Extra Spin", "100",
+            "150", "5000", "-300", "50", "-100", "-50"]
+
+count = 0
+accountBalance = 500
+
+while count < 10:
+
+    count += 1
+    print('Your current balance is: ${} \nYour current count is: {}'.format(
+        accountBalance, count))
+    randomIndices = random.sample(range(0, len(slotList)), len(slotList))
+
+    newSlot = []
+
+    for i in range(len(slotList)):
+        newSlot.append(slotList[randomIndices[i]])
+
+    print(newSlot)
+
+    slotLocation = int(input("Pick a slot (0-9). Input -1 to quit: "))
+    accountBalance -= 20
+    print("================================================\n")
+
+    if slotLocation == -1:
+        print("Your winings: ${}".format(accountBalance))
+        break
+
+    print(newSlot)
+    print("You received: " + newSlot[slotLocation])
+
+    if (newSlot[slotLocation] == "Bankrupt"):
+        accountBalance = 0
+    elif (newSlot[slotLocation] == "Extra Spin"):
+        count -= 1
+    else:
+        accountBalance += int(newSlot[slotLocation])
