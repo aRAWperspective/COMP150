@@ -1,0 +1,234 @@
+//////////////////////PingPong_Class
+
+Ball ball;
+Paddle paddle1, paddle2;
+int hitCount = 0;
+int hitCount2 = 0;
+int missCount;
+int missCount2;
+
+void setup() {
+  size(700,700);
+  
+
+  ball = new Ball(350,350,60);
+  paddle1 = new Paddle(100,320,0);
+  paddle2 = new Paddle(600,320,1);
+  
+  
+}
+
+
+void draw() {
+ 
+    background(0,0,0);
+    
+    ball.updatePosition(paddle1,paddle2);
+    ball.drawBall();
+ 
+    paddle1.drawPaddle();
+    paddle1.drawText();
+    
+
+    paddle2.drawPaddle();
+}
+
+
+
+void mousePressed() {
+    // Do any mouse pressed actions here, and delegate them to the instantiated objects 
+  
+}
+
+void keyPressed() {
+   // Do any key pressed action here
+   paddle1.keyPressed();
+   paddle2.keyPressed();
+}
+
+//////////////////////////////////////////////////////////////
+
+class Ball {
+   int xc,yc;
+   int R,G,B;
+   int radius;
+   
+   
+   boolean moveLeft, moveUp;
+  
+  Ball(int x, int y, int r) {
+    
+      xc = x; yc = y; radius = r;
+      R = 0;
+      G = 255;
+      B = 0;
+  }
+  
+  // This functions will be called by the pingpong.pde draw callback function
+  
+  void updatePosition(Paddle paddle1,Paddle paddle2) {
+      
+      // Player 1 
+      if ( (xc < paddle1.xPos + paddle1.xWidth + (radius/2))
+           &&  (yc > paddle1.yPos) 
+           &&  (yc < paddle1.yPos + paddle1.yLength) 
+      
+          ) {
+            
+           // Ball is detected on player 1 paddle
+           moveLeft  = false;
+           paddle1.incrementHit();
+        
+      } else if ( (xc > paddle2.xPos - (radius/2))
+           &&  (yc > paddle2.yPos) 
+           &&  (yc < paddle2.yPos + paddle2.yLength)) {
+        // Ball detected on player 2 paddle
+        moveLeft = true;
+        paddle2.incrementHit2();
+      }
+      
+      if ( yc < radius  ) {
+           // Ball is at the top 
+           // Increment paddle1  ( example this should 
+           // not be in your program
+           moveUp = false;
+           
+        
+      } else if (yc  > height + radius)  {
+        moveUp = true;
+      }
+      
+      if ( xc > width + radius) {
+         xc = (width/2);
+         yc = (height/2);
+         moveLeft  = true;
+         paddle1.missHit2();
+         
+      } else if (xc < -radius) {
+        moveLeft = false;
+        xc = (width/2);
+        yc = (height/2);
+        paddle2.missHit();
+      }
+    
+    
+  }
+  
+  void drawBall() {
+    
+      if ( moveUp == true ) {
+         yc -= 3; 
+      }else {
+         // Move down
+         yc += 3; 
+      }
+      
+      if (moveLeft == true) {
+         //xc = xc - 3; 
+         xc -= 3;
+      } else {
+         // Moving to the right
+         xc += 3; 
+        
+      }
+
+      
+      fill(R,G,B);
+      ellipse(xc,yc,radius,radius);
+      
+      
+    
+  }
+}
+
+/////////////////////////////////////////////////////////////////
+
+class Paddle {
+  
+   int xPos,yPos;
+   int R,G,B;
+   
+   // Width and length of the paddle
+   int xWidth,yLength;
+   
+   // 0 = player 1, 1 = player 2
+   int  player;
+   
+   Paddle(int x,int y,int playerType) {
+     xPos = x;
+     yPos = y;
+     player = playerType;
+     R = 0;
+     G = 150;
+     B = 0;
+     xWidth = 10;
+     yLength = 100;
+   }
+   
+     
+   void keyPressed() {
+        // Paddle can only go up and down, and is bordered by the top and bottom edge of the screen
+       if (player == 0 ) {
+           if (key == 'w'  && yPos > 0) {
+              yPos -= 40;  // yPos = yPos - 7 
+             
+           }else if (key  == 'z'  && yPos < height - yLength ) {
+                yPos += 40; 
+           }
+          
+          
+        } else {
+             if (key == 'p' && yPos > 0) {
+              yPos -= 40;  // yPos = yPos - 7 
+             
+           }else if (key  == '.') {
+                 if (yPos < height - yLength) {
+                      yPos += 40; 
+                 }
+           }  
+          
+        }
+   }
+   
+   void drawPaddle() {
+       // This will be called by the main function pinpong.pde to draw the paddle 
+       fill(R,G,B);
+       rect(xPos,yPos,xWidth,yLength);
+   }
+   
+   void drawText() {
+     // Draw text for the hit and miss from the ball
+     
+     stroke(0,255,0);
+     textSize(20);
+     // Player 1
+     text("Hit ",100,height -50);
+     text("Miss ", 200, height - 50);
+     
+     
+     // Player 2
+     text("Hit ", width -200,height - 50);
+     text("Miss ", width -100,height - 50);
+     
+     text(str(hitCount) , 105,height -75);
+     text(str(hitCount2) , 505,height -75);
+     
+     text(str(missCount) , 205,height -75);
+     text(str(missCount2) , 605,height -75);
+     
+   }
+   void missHit() {
+      missCount += 1; 
+   }
+   void missHit2() {
+      missCount2 += 1; 
+   }
+   void incrementHit() {
+      hitCount += 1; 
+   }
+   void incrementHit2() {
+      hitCount2 += 1;
+   }
+ 
+  
+}
